@@ -1,0 +1,19 @@
+{
+  "extends": [
+    "development"
+  ],
+  "hints": {
+    "meta-viewport": "off",
+    "axe/language": [
+      "default",
+      {
+        "html-has-lang": "off"
+      }
+    ],
+    "meta-charset-utf-8": "off",
+    "disown-opener": "off",
+    "axe/forms": "off",
+    "axe/structure": "off",
+    "typescript-config/is-valid": "off"
+  }
+}
