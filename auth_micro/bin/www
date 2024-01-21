@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Module dependencies.
+ * モジュールの依存関係。
  */
 
 var app = require('../app');
@@ -9,20 +9,20 @@ var debug = require('debug')('auth-micro:server');
 var http = require('http');
 
 /**
- * Get port from environment and store in Express.
+ * 環境変数からポートを取得し、Expressに設定する。
  */
 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
- * Create HTTP server.
+ * HTTPサーバーを作成する。
  */
 
 var server = http.createServer(app);
 
 /**
- * Listen on provided port, on all network interfaces.
+ * 指定されたポートで、すべてのネットワークインターフェースに対してリッスンする。
  */
 
 server.listen(port);
@@ -30,19 +30,19 @@ server.on('error', onError);
 server.on('listening', onListening);
 
 /**
- * Normalize a port into a number, string, or false.
+ * ポートを数値、文字列、またはfalseに正規化する関数。
  */
 
 function normalizePort(val) {
   var port = parseInt(val, 10);
 
   if (isNaN(port)) {
-    // named pipe
+    // 名前付きパイプ
     return val;
   }
 
   if (port >= 0) {
-    // port number
+    // ポート番号
     return port;
   }
 
@@ -50,7 +50,7 @@ function normalizePort(val) {
 }
 
 /**
- * Event listener for HTTP server "error" event.
+ * HTTPサーバーの"error"イベントのイベントリスナー。
  */
 
 function onError(error) {
@@ -62,7 +62,7 @@ function onError(error) {
     ? 'Pipe ' + port
     : 'Port ' + port;
 
-  // handle specific listen errors with friendly messages
+  // 特定のリッスンエラーをわかりやすいメッセージで処理する
   switch (error.code) {
     case 'EACCES':
       console.error(bind + ' requires elevated privileges');
@@ -78,7 +78,7 @@ function onError(error) {
 }
 
 /**
- * Event listener for HTTP server "listening" event.
+ * HTTPサーバーの"listening"イベントのイベントリスナー。
  */
 
 function onListening() {
@@ -88,3 +88,16 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+// HTTPSサポートの設定
+const https = require('https');
+const fs = require('fs');
+
+// SSL証明書のオプションを設定
+const options = {
+  key: fs.readFileSync('path/to/key.pem'),
+  cert: fs.readFileSync('path/to/cert.pem')
+};
+
+// HTTPSサーバーを作成し、ポート443でリッスンする
+https.createServer(options, app).listen(443);
