@@ -1,0 +1,6 @@
+go 1.21.0
+
+use (
+	../../go/pkg/mod/github.com/libp2p/go-libp2p-core@v0.8.5
+	./p2p_micro
+)
