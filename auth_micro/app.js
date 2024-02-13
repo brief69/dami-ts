@@ -3,7 +3,11 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+var morgan = require('morgan');
+var mongoose = require('mongoose');
+var dotenv = require('dotenv');
+var helmet = require('helmet');
+var cors = require('cors');
 
 // ルーターモジュールをインポート
 var indexRouter = require('./routes/index');
@@ -17,7 +21,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 // ミドルウェアの設定
-app.use(logger('dev'));
+app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -43,12 +47,20 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-// アプリケーションをエクスポート
-module.exports = app;
-
 // セキュリティ強化のためのミドルウェアを設定
-const helmet = require('helmet');
-const cors = require('cors');
-
 app.use(helmet());
 app.use(cors());
+
+// データベースの接続
+dotenv.config();
+const mongoDB = process.env.MONGODB_URI || 'mongodb://localhost:27017/auth_micro';
+
+mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDBに接続しました。'))
+  .catch(err => console.error('MongoDBへの接続に失敗しました。', err));
+
+// Mongooseのデフォルト接続を取得
+const db = mongoose.connection;
+
+// 接続エラーの場合にコンソールにエラーを表示
+db.on('error', console.error.bind(console, 'MongoDB接続エラー:'));
