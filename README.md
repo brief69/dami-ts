@@ -1,13 +1,40 @@
-# DAMI (Under Development)
+# DAMI (開発中)
 
-## DAMI is a still experimental new definition of the internet
+## DAMIについて
 
-- With auth_micro, authenticated users can use DAMI. Authentication will be possible with a passkey.
+DAMIは、インターネットの新しい定義を目指す実験的なプロジェクトです。データの送受信、認証、P2P通信、GraphQLクエリの自動生成など、インターネットの基本的な機能を再考し、より効率的でセキュアな通信を実現することを目指しています。
 
-- p2p_micro ensures highly efficient p2p communication automatically for almost all data types, providing efficient p2p communication.
+### 主な特徴
 
-- gql_micro automatically generates and references GraphQL queries for data already present in the network through p2p_micro's DHT when users need it.
+- **auth_micro**: パスキーによる認証を通じて、認証されたユーザーがDAMIを使用できます。
+- **p2p_micro**: ほぼ全てのデータタイプに対して高効率なP2P通信を自動的に保証します。
+- **gql_micro**: 必要に応じて、p2p_microのDHTを通じてネットワーク上に既に存在するデータに対してGraphQLクエリを自動生成し、参照します。
+- **gcn_micro**: データの送受信、GraphQLクエリ、P2P通信を含むDAMI内のほぼ全てのイベントをgnnを通じて処理します。その使用方法は現在検討中です。
 
-- gcn_micro processes almost all events in DAMI, including data transmission and reception, GraphQL queries, and p2p communication, through gnn. How this will be used is under consideration.
+## 開発への参加
 
-## TODO
+DAMIプロジェクトはオープンソースであり、コミュニティの支援と協力によって成長しています。開発に参加したい方は、以下の方法で貢献できます。
+
+### バグ報告や機能提案
+
+バグの報告や新機能の提案は、GitHubのIssuesを通じて行ってください。詳細な説明と再現手順を記載していただけると、問題の解決に役立ちます。
+
+### コードへの貢献
+
+プルリクエストはいつでも歓迎します！以下の手順で貢献できます。
+
+1. リポジトリをフォークして、変更を加えます。
+2. 変更をコミットし、プルリクエストを作成します。
+3. コードレビューを受け、必要に応じてさらなる変更を加えます。
+
+### ドキュメントの改善
+
+ドキュメントの改善も大歓迎です。より明確で理解しやすいドキュメントは、新しい開発者がプロジェクトに参加しやすくなります。
+
+## ライセンス
+
+このプロジェクトは[MITライセンス](LICENSE)の下で公開されています。
+
+## コミュニティ
+
+DAMIプロジェクトに関する議論や質問は、[GitHub Discussions](https://github.com/brief69/DAMI/discussions/1)で行うことができます。活発なコミュニティの一員として、プロジェクトの成長に貢献しましょう。

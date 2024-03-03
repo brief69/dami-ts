@@ -72,15 +72,14 @@ type User struct {
   ID int
   Name string
 }
-```
 
 And reference the model in `gqlgen.yml`:
 
 # gqlgen.yml
+
 models:
   User:
     model: github.com/you/pkg/model.User # go import path to the User struct above
-```
 
 - #### Using Explicit Resolvers
 
