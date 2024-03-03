@@ -1,0 +1,26 @@
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.3",
+        import: ["@key", "@shareable", "@provides", "@external", "@tag", "@extends", "@override", "@inaccessible"])
+
+schema {
+    query: CustomQuery
+}
+
+type Hello @key(fields:"name", resolvable: false) {
+  name: String!
+}
+
+type World @key(fields: "foo bar", resolvable: false) {
+    foo: String!
+    bar: Int!
+}
+
+extend type ExternalExtension @key(fields: "  upc    ") {
+    upc: String!
+    reviews: [Hello]
+}
+
+type CustomQuery {
+  hello: Hello!
+}
+
