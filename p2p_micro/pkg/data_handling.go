@@ -17,7 +17,7 @@ import (
 
 func main() {
 	// libp2pノードの初期化
-	node, err := libp2p.New(context.Background())
+	node, err := libp2p.New()
 	if err != nil {
 		panic(err)
 	}
@@ -71,6 +71,9 @@ func sendQueryToGqlMicro(query string) {
 	// GraphQLクエリをJSON形式で送信
 	var jsonStr = []byte(query)
 	req, err := http.NewRequest("POST", gqlMicroEndpoint, bytes.NewBuffer(jsonStr))
+	if err != nil {
+		panic(err) // または適切なエラーハンドリング
+	}
 	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{}

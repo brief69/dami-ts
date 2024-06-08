@@ -4,13 +4,15 @@ package datatypes
 type DataType int
 
 const (
-    Unknown DataType = iota
-    FinancialHistory
-    // 他のデータタイプをここに追加
+	Unknown DataType = iota
+	Text
+	Image
+	Video
+	// 他のデータタイプをここに追加
 )
 
 // DetectDataType は、与えられたデータからデータタイプを識別します。
 func DetectDataType(data string) DataType {
-    // ここにデータタイプを識別するロジックを実装
-    return Unknown
+	// ここにデータタイプを識別するロジックを実装
+	return Unknown
 }
