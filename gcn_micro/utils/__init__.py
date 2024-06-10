@@ -1,1 +1,3 @@
+# このファイルは、ユーティリティ関数をインポートするための初期化ファイルです。
+# data_loaderモジュールからload_data関数とnormalize_adjacency関数をインポートします。
 from .data_loader import load_data, normalize_adjacency

@@ -12,3 +12,4 @@ class GCNLayer(nn.Module):
     def forward(self, A, X):
         # 入力Xと隣接行列Aを用いて線形変換を行い、その結果を返す
         return self.linear(torch.matmul(A, X))
+    
