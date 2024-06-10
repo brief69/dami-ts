@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
-const User = require('../models/user'); // ユーザーモデルをインポート
+const User = require('../models/user');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken'); // JWTを使用するためのモジュール
+const jwt = require('jsonwebtoken');
 const authenticateToken = require('../middleware/authenticateToken');
 
 // ユーザー一覧を取得するエンドポイント

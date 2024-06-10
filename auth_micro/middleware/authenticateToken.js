@@ -1,6 +1,3 @@
-
-
-// authenticateToken.js
 // トークン検証ミドルウェア
 function authenticateToken(req, res, next) {
     // 認証ヘッダーからトークンを取得
@@ -18,3 +15,4 @@ function authenticateToken(req, res, next) {
       next();
     });
   }
+  

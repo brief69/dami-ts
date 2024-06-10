@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../app'); // Expressアプリケーションをインポート
+const app = require('../app');
 
 describe('POST /users/register', () => {
   it('should create a new user and return 201 status', async () => {
