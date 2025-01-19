@@ -1,0 +1,30 @@
+{
+  "name": "dami",
+  "version": "1.0.0",
+  "description": "代替次元システム",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brief69/DAMI.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brief69/DAMI/issues"
+  },
+  "homepage": "https://github.com/brief69/DAMI#readme",
+  "dependencies": {
+    "@hyperswarm/dht": "^6.5.1",
+    "@types/node": "^22.10.7",
+    "hypercore-protocol": "^8.0.7",
+    "ipfs-http-client": "^60.0.1",
+    "typescript": "^5.7.3"
+  }
+}
