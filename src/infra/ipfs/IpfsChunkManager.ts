@@ -13,7 +13,12 @@ export class IpfsChunkManager implements ChunkManager {
 
   async createChunk(data: Buffer, type: ChunkType): Promise<Chunk> {
     const result = await this.ipfs.add(data);
-    return new Chunk(result.cid.toString(), data, type, new Date());
+    return new Chunk(
+      result.cid.toString(),
+      type,
+      data.length,
+      new Date()
+    );
   }
 
   async getChunk(cid: string): Promise<Chunk> {

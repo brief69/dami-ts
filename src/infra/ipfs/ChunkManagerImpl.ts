@@ -2,6 +2,7 @@ import { create } from 'ipfs-http-client'
 import { Chunk, ChunkType } from '../../core/entities/Chunk'
 import { ChunkManager } from '../../core/services/ChunkManager'
 import { P2PManager } from '../p2p/libp2p'
+import { concat as uint8ArrayConcat } from 'uint8arrays/concat'
 
 export class ChunkManagerImpl implements ChunkManager {
   private ipfs
@@ -18,12 +19,12 @@ export class ChunkManagerImpl implements ChunkManager {
 
   async createChunk(data: Buffer, type: ChunkType): Promise<Chunk> {
     const result = await this.ipfs.add(data)
-    const chunk: Chunk = {
-      cid: result.cid.toString(),
+    const chunk = new Chunk(
+      result.cid.toString(),
       type,
-      size: data.length,
-      timestamp: new Date()
-    }
+      data.length,
+      new Date()
+    )
     
     // P2Pネットワークに新しいチャンクを通知
     await this.p2pManager.publish('new-chunk', {
@@ -35,17 +36,19 @@ export class ChunkManagerImpl implements ChunkManager {
   }
 
   async getChunk(cid: string): Promise<Chunk> {
-    const chunks = await this.ipfs.get(cid)
-    for await (const chunk of chunks) {
-      if (!chunk.content) continue
-      return {
-        cid,
-        type: ChunkType.Unknown, // 実際の型は保存されたメタデータから取得する必要がある
-        size: chunk.size,
-        timestamp: new Date()
-      }
+    // IPFSからデータを取得し、Uint8Arrayの配列を結合
+    const chunks = []
+    for await (const chunk of this.ipfs.cat(cid)) {
+      chunks.push(chunk)
     }
-    throw new Error(`Chunk not found: ${cid}`)
+    const content = uint8ArrayConcat(chunks)
+    
+    return new Chunk(
+      cid,
+      ChunkType.UNKNOWN,
+      content.length,
+      new Date()
+    )
   }
 
   async deleteChunk(cid: string): Promise<void> {

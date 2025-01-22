@@ -21,58 +21,80 @@ export class RecipeManagerImpl implements RecipeManager {
 
   async createRecipe(chunks: string[], metadata: RecipeMetadata, creator: string): Promise<Recipe> {
     // レシピデータの作成
-    const recipe: Recipe = {
-      id: `recipe-${Date.now()}`,
+    const recipe = new Recipe(
+      `recipe-${Date.now()}`,
       chunks,
       metadata,
       creator,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      value: 0
-    }
+      new Date(),
+      new Date(),
+      0
+    )
 
     // レシピをIPFSに保存
     const recipeData = Buffer.from(JSON.stringify(recipe))
     const result = await this.ipfs.add(recipeData)
-    recipe.id = result.cid.toString()
+    const updatedRecipe = new Recipe(
+      result.cid.toString(),
+      recipe.chunks,
+      recipe.metadata,
+      recipe.creator,
+      recipe.createdAt,
+      recipe.updatedAt,
+      recipe.value
+    )
 
     // P2Pネットワークに新しいレシピを通知
     await this.p2pManager.publish('new-recipe', {
-      id: recipe.id,
-      creator: recipe.creator,
-      metadata: recipe.metadata
+      id: updatedRecipe.id,
+      creator: updatedRecipe.creator,
+      metadata: updatedRecipe.metadata
     })
 
-    return recipe
+    return updatedRecipe
   }
 
   async getRecipe(id: string): Promise<Recipe> {
-    const chunks = await this.ipfs.get(id)
-    for await (const chunk of chunks) {
-      if (!chunk.content) continue
-      const content = await chunk.content()
-      return JSON.parse(content.toString())
-    }
-    throw new Error(`Recipe not found: ${id}`)
+    const content = await this.ipfs.cat(id)
+    if (!content) throw new Error(`Recipe not found: ${id}`)
+    const data = JSON.parse(content.toString())
+    return new Recipe(
+      data.id,
+      data.chunks,
+      data.metadata,
+      data.creator,
+      new Date(data.createdAt),
+      new Date(data.updatedAt),
+      data.value
+    )
   }
 
   async updateRecipe(id: string, updates: Partial<RecipeMetadata>): Promise<Recipe> {
     const recipe = await this.getRecipe(id)
-    recipe.metadata = { ...recipe.metadata, ...updates }
-    recipe.updatedAt = new Date()
+    const updatedRecipe = recipe.withUpdates({
+      metadata: { ...recipe.metadata, ...updates }
+    })
 
     // 更新されたレシピをIPFSに保存
-    const recipeData = Buffer.from(JSON.stringify(recipe))
+    const recipeData = Buffer.from(JSON.stringify(updatedRecipe))
     const result = await this.ipfs.add(recipeData)
-    recipe.id = result.cid.toString()
+    const finalRecipe = new Recipe(
+      result.cid.toString(),
+      updatedRecipe.chunks,
+      updatedRecipe.metadata,
+      updatedRecipe.creator,
+      updatedRecipe.createdAt,
+      new Date(),
+      updatedRecipe.value
+    )
 
     // P2Pネットワークにレシピ更新を通知
     await this.p2pManager.publish('update-recipe', {
-      id: recipe.id,
+      id: finalRecipe.id,
       updates
     })
 
-    return recipe
+    return finalRecipe
   }
 
   async deleteRecipe(id: string): Promise<void> {
@@ -117,9 +139,8 @@ export class RecipeManagerImpl implements RecipeManager {
   }
 
   async updateRecipeValue(recipe: Recipe, value: number): Promise<void> {
-    const updatedRecipe = await this.getRecipe(recipe.id)
-    updatedRecipe.value = value
-    updatedRecipe.updatedAt = new Date()
+    const currentRecipe = await this.getRecipe(recipe.id)
+    const updatedRecipe = currentRecipe.withUpdates({ value })
 
     // 更新されたレシピをIPFSに保存
     const recipeData = Buffer.from(JSON.stringify(updatedRecipe))
