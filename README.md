@@ -5,7 +5,7 @@ DAMIは、分散型コンテンツ管理とP2P通信を組み合わせた新し�
 ## 主な特徴
 
 - IPFSベースのチャンク管理
-- Holepunchを使用したP2P通信
+- libp2pを使用したP2P通信
 - AT Protocol準拠の分散型ID
 - インセンティブベースの価値システム
 
@@ -13,8 +13,8 @@ DAMIは、分散型コンテンツ管理とP2P通信を組み合わせた新し�
 
 - TypeScript
 - IPFS (データストレージ)
-- Hyperswarm/DHT (P2P通信)
-- Hypercore Protocol (データ同期)
+- libp2p (P2P通信基盤)
+- libp2p-kad-dht (DHT実装)
 
 ## 開発状況
 
@@ -23,7 +23,7 @@ DAMIは、分散型コンテンツ管理とP2P通信を組み合わせた新し�
 - エンティティ定義 (Chunk, Recipe, User)
 - コアサービス (ChunkManager, RecipeManager)
 - IPFS統合
-- P2P通信基盤
+- libp2pベースのP2P通信基盤
 
 ## 未実装/検討中の機能
 
@@ -31,6 +31,13 @@ DAMIは、分散型コンテンツ管理とP2P通信を組み合わせた新し�
 - インセンティブ計算アルゴリズム
 - XLLシステムとの連携
 - ユーザー認証システム
+
+## 実装観点
+
+- シンプルで簡単な実装を目指します
+- 拡張性を重視した設計を行います
+- 柔軟な構造を維持します
+- 不必要な複雑性は排除します
 
 ## セットアップ
 
@@ -46,6 +53,10 @@ npm start
 - 本番環境での使用は推奨されません
 - セキュリティ面での検証が必要です
 
-## ライセンス
+## コントリビューション
 
-ISC
+1. このリポジトリをフォークします
+2. 新しい機能用のブランチを作成します：`git checkout -b feature/amazing-feature`
+3. 変更をコミットします：`git commit -m 'Add amazing feature'`
+4. リモートブランチにプッシュします：`git push origin feature/amazing-feature`
+5. プルリクエストを作成します

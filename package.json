@@ -21,10 +21,16 @@
   },
   "homepage": "https://github.com/brief69/DAMI#readme",
   "dependencies": {
-    "@hyperswarm/dht": "^6.5.1",
     "@types/node": "^22.10.7",
-    "hypercore-protocol": "^8.0.7",
     "ipfs-http-client": "^60.0.1",
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "libp2p": "^0.46.21",
+    "@libp2p/kad-dht": "^11.0.8",
+    "@libp2p/pubsub": "^8.0.11",
+    "@libp2p/tcp": "^8.0.11",
+    "@libp2p/websockets": "^7.0.11",
+    "@libp2p/bootstrap": "^9.0.11",
+    "@chainsafe/libp2p-noise": "^13.0.2",
+    "@libp2p/mplex": "^9.0.11"
   }
 }
