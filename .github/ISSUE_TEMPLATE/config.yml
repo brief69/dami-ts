@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: DAMIプロトコルドキュメント
+    url: https://github.com/brief69/dami-ts/docs
+    about: DAMIプロトコルの詳細情報を確認する
+  - name: 質問・議論
+    url: https://github.com/brief69/dami-ts/discussions
+    about: 質問や一般的な議論はこちらをご利用ください 
