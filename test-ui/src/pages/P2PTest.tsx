@@ -712,51 +712,52 @@ const P2PTest: React.FC = () => {
                               ) : (
                                 <List dense>
                                   {sharedContent.map((content, index) => (
-                                    <ListItem
-                                      key={content.cid}
-                                      secondaryAction={
-                                        content.status === 'available' ? (
-                                          <IconButton 
-                                            edge="end" 
-                                            onClick={() => handleDownloadContent(index)}
-                                            color="primary"
-                                          >
-                                            <DownloadIcon />
-                                          </IconButton>
-                                        ) : content.status === 'complete' ? (
-                                          <CheckCircleIcon color="success" />
-                                        ) : content.status === 'error' ? (
-                                          <ErrorIcon color="error" />
-                                        ) : null
-                                      }
-                                    >
-                                      <ListItemIcon>
-                                        <CloudIcon color="primary" />
-                                      </ListItemIcon>
-                                      <ListItemText
-                                        primary={content.name}
-                                        secondary={formatBytes(content.size)}
-                                      />
-                                    </ListItem>
-                                    
-                                    {content.status === 'downloading' && content.progress !== undefined && (
-                                      <Box sx={{ px: 2, pb: 1 }}>
-                                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                          <Box sx={{ width: '100%', mr: 1 }}>
-                                            <LinearProgress 
-                                              variant="determinate" 
-                                              value={content.progress} 
-                                            />
-                                          </Box>
-                                          <Box minWidth={35}>
-                                            <Typography variant="body2" color="text.secondary">
-                                              {`${Math.round(content.progress)}%`}
-                                            </Typography>
+                                    <React.Fragment key={content.cid}>
+                                      <ListItem
+                                        secondaryAction={
+                                          content.status === 'available' ? (
+                                            <IconButton 
+                                              edge="end" 
+                                              onClick={() => handleDownloadContent(index)}
+                                              color="primary"
+                                            >
+                                              <DownloadIcon />
+                                            </IconButton>
+                                          ) : content.status === 'complete' ? (
+                                            <CheckCircleIcon color="success" />
+                                          ) : content.status === 'error' ? (
+                                            <ErrorIcon color="error" />
+                                          ) : null
+                                        }
+                                      >
+                                        <ListItemIcon>
+                                          <CloudIcon color="primary" />
+                                        </ListItemIcon>
+                                        <ListItemText
+                                          primary={content.name}
+                                          secondary={formatBytes(content.size)}
+                                        />
+                                      </ListItem>
+                                      
+                                      {content.status === 'downloading' && content.progress !== undefined && (
+                                        <Box sx={{ px: 2, pb: 1 }}>
+                                          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                            <Box sx={{ width: '100%', mr: 1 }}>
+                                              <LinearProgress 
+                                                variant="determinate" 
+                                                value={content.progress} 
+                                              />
+                                            </Box>
+                                            <Box minWidth={35}>
+                                              <Typography variant="body2" color="text.secondary">
+                                                {`${Math.round(content.progress)}%`}
+                                              </Typography>
+                                            </Box>
                                           </Box>
                                         </Box>
-                                      </Box>
-                                    )}
-                                  </List>
+                                      )}
+                                    </React.Fragment>
+                                  ))}
                                 </List>
                               )}
                             </Box>

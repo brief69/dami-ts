@@ -88,4 +88,22 @@ button {
 
 .mt-3 {
   margin-top: 1.5rem;
+}
+
+/* アプリレイアウト */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-container {
+  display: flex;
+  flex: 1;
+}
+
+.content {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
 } 
